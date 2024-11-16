@@ -11,6 +11,10 @@ def encode_to_base64(data):
     """Encode the data to a base64 string."""
     return base64.b64encode(data.encode()).decode('utf-8')
 
+def generate_random_filename(length=10):
+    """Generate a random string of numbers and letters for the filename."""
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
 def create_base64_file(file_name, size):
     """Create a file with a base64-encoded string."""
     random_data = generate_random_data(size)
@@ -26,13 +30,13 @@ def create_multiple_base64_files(directory, num_files, file_size):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    for i in range(num_files):
-        file_name = os.path.join(directory, f"file_{i+1}.txt")
+    for _ in range(num_files):
+        file_name = os.path.join(directory, generate_random_filename() + ".txt")
         create_base64_file(file_name, file_size)
 
 if __name__ == "__main__":
     # Configuration
-    output_directory = '.'  # Directory to store the files
+    output_directory = 'base64_files'  # Directory to store the files
     number_of_files = 10  # Number of files to create
     file_size = 1024  # Size of each file in random characters
 
